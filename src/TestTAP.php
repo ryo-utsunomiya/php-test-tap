@@ -26,7 +26,7 @@ class TestTAP {
     var $context_level = 0;
     var $trace_level = 0;
 
-    function ok ($a, $msg = null) {
+    public function ok ($a, $msg = null) {
         if ( $a ) {
             $this->output("ok %d - " . $msg);
             return true;
@@ -39,7 +39,7 @@ class TestTAP {
         }
     }
 
-    function is ($a, $b, $msg = null) {
+    public function is ($a, $b, $msg = null) {
         $ret = $a === $b;
         $this->trace_level++;
         $ret = $this->ok($ret, $msg);
@@ -50,17 +50,17 @@ class TestTAP {
         return $ret;
     }
 
-    function diag ($msg) {
+    public function diag ($msg) {
         foreach ( mb_split("\n", $msg) as $line ) {
             error_log("# " . $line);
         }
     }
 
-    function done_testing () {
+    public function done_testing () {
         $this->output("1.." . $this->test_num);
     }
 
-    function subtest ($test_name, $callback) {
+    public function subtest ($test_name, $callback) {
         $this->trace_level++;
         $new = new TestTAP();
         $new->context = $this->context ? ( $this->context . ": " . $test_name ) : ( $test_name );
@@ -71,13 +71,17 @@ class TestTAP {
         $this->trace_level--;
         return $ret;
     }
-
+    
     private function output ($msg) {
         $this->test_num++;
         for ($i = 0; $i < $this->context_level; $i++ ) {
             print "\t";
         }
         printf($msg . "\n", $this->test_num);
+    }
+    
+    public function __destruct () {
+        $this->done_testing();
     }
 
 }
