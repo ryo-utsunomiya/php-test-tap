@@ -20,11 +20,11 @@
  *
  * */
 class TestTAP {
-    var $test_num = 0;
-    var $fail_count = 0;
-    var $context = "";
-    var $context_level = 0;
-    var $trace_level = 0;
+    private $test_num = 0;
+    private $fail_count = 0;
+    private $context = "";
+    private $context_level = 0;
+    private $trace_level = 0;
 
     public function ok ($a, $msg = null) {
         if ( $a ) {
